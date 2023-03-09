@@ -4,22 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FlappyBird extends JFrame {
-    public static FlappyBird flappyBird;
-    private Paneel aken;
-
-    public final int LAIUS = 600, KÕRGUS = 600;
-
+    Paneel paneel;
     public FlappyBird() {
-
-        aken = new Paneel();
-        add(aken);
+        paneel = new Paneel();
+        add(paneel);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
-
+        paneel.alustaMängu();
     }
 
     public static void main(String[] args) {

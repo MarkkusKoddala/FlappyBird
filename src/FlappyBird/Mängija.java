@@ -4,9 +4,17 @@ import java.awt.*;
 
 public class Mängija {
 
-    private int x, y;
+    public int x, y;
     private int suurus;
     private Color värv;
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public Mängija(int x, int y, int suurus, Color värv) {
         this.x = x;
@@ -21,6 +29,11 @@ public class Mängija {
     }
 
     public void tühikuVajutus(){
-        x += 10;
+        y += 50;
     }
+
+    public void liigub(){
+        y-=3;
+    }
+
 }
