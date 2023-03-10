@@ -8,7 +8,7 @@ public class FlappyBird extends JFrame {
     public FlappyBird() {
         paneel = new Paneel();
         add(paneel);
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);

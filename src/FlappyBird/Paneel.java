@@ -6,16 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Random;
 
 //https://www.youtube.com/watch?v=a3Hzs2XAJBg
 public class Paneel extends JPanel implements KeyListener, ActionListener {
-    public final int LAIUS = 600, KÕRGUS = 600;
+    public final int LAIUS = 600, KÕRGUS = 600, TAKISTUSTEVAHE = 100;
+    private int takistusteArv;
     private Mängija mängijaRuut;
     private Timer timer;
     private boolean mängKäib;
+    private ArrayList<Takistus> takistusteList;
+
 
     public Paneel(){
         mängijaRuut= new Mängija(400, 400);
+        takistusteList = new ArrayList<Takistus>();
         setPreferredSize(new Dimension(LAIUS, KÕRGUS));
         setBackground(new Color(31, 158, 208));
         setLayout(null);
@@ -45,8 +51,12 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
 
         } else {
             mängijaRuut.joonista(g);
+            for (Takistus takistus : takistusteList) {
+                takistus.joonistaObjektid(g);
+            }
         }
     }
+
     public void keyPressed (KeyEvent e) {
         if (!mängKäib && e.getKeyCode() == KeyEvent.VK_ENTER){
             alustaMängu();
@@ -63,6 +73,36 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
 
     public void mänguMootor(){
         mängijaRuut.liigub();
+        kontrolliJagenereeriTakistused();
+
+        if (!(takistusteList.get(0).getX() + 50 > 0)){
+            takistusteList.remove(0);
+            takistusteList.remove(0);
+            takistusteArv -= 2;
+        }
+
+        for (Takistus takistus: takistusteList){
+            takistus.takistusLiigub();
+        }
+    }
+
+    public void kontrolliJagenereeriTakistused(){
+        while (takistusteArv < 6){
+            if (takistusteList.size() == 0) {
+                int kõrgus = (int) (Math.random() * 100) +200;
+                takistusteList.add(new Takistus(150, 0, kõrgus));
+                takistusteList.add(new Takistus(150, kõrgus+150, 600-kõrgus-150 ));
+            } else {
+                int kõrgus = (int) (Math.random() * 300) +200;
+                takistusteList.add(new Takistus(takistusteList.get(takistusteList.size()-2).getX() + LAIUS + 100, 0, kõrgus));
+                takistusteList.add(new Takistus(takistusteList.get(takistusteList.size()-2).getX() + LAIUS + 100, kõrgus+150, 600-kõrgus-150));
+            }
+            takistusteArv += 2;
+        }
+    }
+
+    public void kontrolliPuudet (){
+
     }
 
     public void alustaMängu(){
