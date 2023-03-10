@@ -13,7 +13,6 @@ public class FlappyBird extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        paneel.alustaMängu();
     }
 
     public static void main(String[] args) {

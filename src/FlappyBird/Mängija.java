@@ -5,8 +5,26 @@ import java.awt.*;
 public class Mängija {
 
     public int x, y;
-    private int suurus;
-    private Color värv;
+    private final int suurus;
+    private final Color värv;
+
+    public Mängija(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.suurus = 20;
+        this.värv = new Color(206, 11, 11);
+    }
+
+    public void joonista(Graphics g) {
+        g.setColor(värv);
+        g.drawOval(x, y, 20, 20);
+        g.fillOval(x, y, 20, 20);
+    }
+
+
+    public void tühikuVajutus(){
+        y -= 50;
+    }
 
     public void setX(int x) {
         this.x = x;
@@ -16,24 +34,8 @@ public class Mängija {
         this.y = y;
     }
 
-    public Mängija(int x, int y, int suurus, Color värv) {
-        this.x = x;
-        this.y = y;
-        this.suurus = suurus;
-        this.värv = värv;
-    }
-
-    public void joonista(Graphics g){
-        g.setColor(värv);
-        g.fillRect(x, y, suurus, suurus);
-    }
-
-    public void tühikuVajutus(){
-        y += 50;
-    }
-
     public void liigub(){
-        y-=3;
+        y+=3;
     }
 
 }

@@ -15,9 +15,9 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
     private boolean mängKäib;
 
     public Paneel(){
-        mängijaRuut= new Mängija(400, 400, 10, Color.green);
+        mängijaRuut= new Mängija(400, 400);
         setPreferredSize(new Dimension(LAIUS, KÕRGUS));
-        setBackground(Color.blue);
+        setBackground(new Color(31, 158, 208));
         setLayout(null);
         setFocusable(true); //võtab sisendit vastu
         addKeyListener(this);
@@ -28,8 +28,20 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
     @Override
     public void paintComponent (Graphics g){
         super.paintComponent(g);
-        if (!mängKäib){
-            g.drawString("Vajuta ENTER, et alustada mängu!", 300, 300);
+
+        g.setColor(new Color(38, 129, 216));
+        g.fillRect(0,0,LAIUS,KÕRGUS);
+
+        g.setColor(new Color(10, 189, 15));
+        g.fillRect(0, KÕRGUS-100, LAIUS, 20);
+
+        g.setColor(new Color(192, 106, 4));
+        g.fillRect(0, KÕRGUS-80, LAIUS, 80 );
+
+        if (!(mängKäib)){
+            Font font = new Font("Arial", Font.BOLD,  25);
+            g.setFont(font);
+            g.drawString("Vajuta ENTER, et alustada mängu!", 120, 300);
 
         } else {
             mängijaRuut.joonista(g);
