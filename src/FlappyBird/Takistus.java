@@ -15,6 +15,18 @@ public class Takistus {
     }
 
 
+    public int getY() {
+        return y;
+    }
+
+    public int getKõrgus() {
+        return kõrgus;
+    }
+
+    public int getLAIUS() {
+        return LAIUS;
+    }
+
     public void joonistaObjektid (Graphics g){
         g.setColor(Color.green);
         g.drawRect(x, y, LAIUS, kõrgus);
@@ -22,7 +34,7 @@ public class Takistus {
     }
 
     public void takistusLiigub(){
-        x -= 5;
+        x -= 3;
     }
     public void lisaTakistus(){
 

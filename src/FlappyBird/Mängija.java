@@ -1,41 +1,49 @@
 package FlappyBird;
 
 import java.awt.*;
+import java.sql.Time;
 
 public class Mängija {
 
+    public final int RUUDUA = 20;
+
     public int x, y;
-    private final int suurus;
+    public double yKiirus;
     private final Color värv;
 
-    public Mängija(int x, int y) {
-        this.x = x;
+    public Mängija(int y) {
+        this.x = 250;
         this.y = y;
-        this.suurus = 20;
+        this.yKiirus = 4;
         this.värv = new Color(206, 11, 11);
     }
 
     public void joonista(Graphics g) {
         g.setColor(värv);
-        g.drawOval(x, y, 20, 20);
-        g.fillOval(x, y, 20, 20);
+        g.fillRect(x, y, 20, 20);
+    }
+
+    public int getRUUDUA() {
+        return RUUDUA;
+    }
+
+    public int getX() {
+        return x;
     }
 
 
-    public void tühikuVajutus(){
-        y -= 50;
+    public int getY() {
+        return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setyKiirus(int kiirus){
+        this.yKiirus=kiirus;
     }
 
     public void liigub(){
-        y+=3;
+        if (yKiirus < 4){
+            yKiirus += 0.2;
+            y+=yKiirus;}
+        else y+=4;
     }
-
 }
