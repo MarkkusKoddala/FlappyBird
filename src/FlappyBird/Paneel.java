@@ -11,7 +11,7 @@ import java.util.Random;
 
 //https://www.youtube.com/watch?v=a3Hzs2XAJBg
 public class Paneel extends JPanel implements KeyListener, ActionListener {
-    public final int LAIUS = 600, KÕRGUS = 600, TAKISTUSTEVAHE = 100;
+    public final int LAIUS = 600, KÕRGUS = 600, TAKISTUSTEVAHE = 300;
     private int takistusteArv;
     private Mängija mängijaRuut;
     private Timer timer;
@@ -93,13 +93,13 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
     public void kontrolliJagenereeriTakistused(){
         while (takistusteArv < 4){
             if (takistusteList.size() == 0) {
-                int kõrgus = (int) (Math.random() * 150) +150;
+                int kõrgus = (int) (Math.random() * 200) +120;
                 takistusteList.add(new Takistus(800, 0, kõrgus));
                 takistusteList.add(new Takistus(800, kõrgus+120, 380-kõrgus ));
             } else {
-                int kõrgus = (int) (Math.random() * 100) +200;
-                takistusteList.add(new Takistus(takistusteList.get(takistusteList.size()-2).getX() + LAIUS + 100, 0, kõrgus));
-                takistusteList.add(new Takistus(takistusteList.get(takistusteList.size()-2).getX() + LAIUS + 100, kõrgus+120, 380-kõrgus));
+                int kõrgus = (int) (Math.random() * 200) +120;
+                takistusteList.add(new Takistus(takistusteList.get(takistusteList.size()-2).getX() + TAKISTUSTEVAHE + 50, 0, kõrgus));
+                takistusteList.add(new Takistus(takistusteList.get(takistusteList.size()-2).getX() + TAKISTUSTEVAHE + 50, kõrgus+120, 380-kõrgus));
             }
             takistusteArv += 2;
         }
