@@ -4,7 +4,9 @@ import javax.swing.*;
 
 public class Aken {
 
-    public final int LAIUS = 600, KÕRGUS = 600;
+    public static final int LAIUS = 600, KÕRGUS = 600;
+
+    public static final int mängualaAluminePiire = KÕRGUS - 100;
     public Aken(){
         JFrame aken = new JFrame();
         aken.setSize(LAIUS, KÕRGUS);
