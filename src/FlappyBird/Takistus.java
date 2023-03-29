@@ -3,28 +3,19 @@ package FlappyBird;
 import java.awt.*;
 
 public class Takistus {
-    private int x;
+    public int x;
     private int y;
-    private int kõrgus;
-    public final int LAIUS = 50;
-
-    public Takistus(int x, int y, int kõrgus){
-        this.x = x;
-        this. y = y;
-        this.kõrgus = kõrgus;
-    }
-
+    public int kõrgus;
+    public static final int LAIUS = 50;
 
     public int getY() {
         return y;
     }
 
-    public int getKõrgus() {
-        return kõrgus;
-    }
-
-    public int getLAIUS() {
-        return LAIUS;
+    public Takistus(int x, int y, int kõrgus){
+        this.x = x;
+        this. y = y;
+        this.kõrgus = kõrgus;
     }
 
     public void joonistaObjektid (Graphics g){
@@ -34,18 +25,10 @@ public class Takistus {
     }
 
     public void takistusLiigub(){
-        x -= 3;
+        x -= Paneel.takistuseKiirus;
     }
-    public void lisaTakistus(){
-
-    }
-
     public int getX() {
         return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
     }
 
 }
