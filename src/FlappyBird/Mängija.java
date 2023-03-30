@@ -1,49 +1,65 @@
 package FlappyBird;
 
 import java.awt.*;
-import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 public class Mängija {
 
-    public final int RUUDUA = 20;
-
     public int x, y;
-    public double yKiirus;
+    private final int suurus;
     private final Color värv;
 
-    public Mängija(int y) {
-        this.x = 250;
+    public static final int LAIUS = 20;
+
+    public static final int KÕRGUS = 20;
+
+    public Mängija(int x, int y) {
+        this.x = x;
         this.y = y;
-        this.yKiirus = 4;
-        this.värv = new Color(206, 11, 11);
+        this.suurus = 20;
+        this.värv = new Color(133, 226, 200);
     }
 
     public void joonista(Graphics g) {
         g.setColor(värv);
-        g.fillRect(x, y, 20, 20);
+        g.drawRect(x, y, LAIUS, KÕRGUS);
+        g.fillRect(x, y, LAIUS, KÕRGUS);
     }
 
-    public int getRUUDUA() {
-        return RUUDUA;
+
+    public void tühikuVajutus(){
+        kiirus = -7;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public double kiirus = 2;
+
+    public void liigub(){
+        if (y <= 500) {
+            y += kiirus;
+            kiirus += 1/2.0;
+        }
+        if (y>Aken.mängualaAluminePiire - Mängija.KÕRGUS) {
+            y=Aken.mängualaAluminePiire - Mängija.KÕRGUS;
+        }
+        if (Paneel.mänguOlek == Paneel.MänguOlek.MÄNG_LÄBI){
+            x -= Paneel.takistuseKiirus;
+        }
+
     }
 
     public int getX() {
         return x;
     }
 
-
     public int getY() {
         return y;
-    }
-
-    public void setyKiirus(int kiirus){
-        this.yKiirus=kiirus;
-    }
-
-    public void liigub(){
-        if (yKiirus < 4){
-            yKiirus += 0.2;
-            y+=yKiirus;}
-        else y+=4;
     }
 }
