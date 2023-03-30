@@ -16,7 +16,14 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
     private Mängija mängijaRuut;
     private Timer timer;
 
-    public static int takistuseKiirus = 5;
+    //public int ülemiseAlumiseVahe = (int) Math.round(Math.random()*40+110); hiljem teen sellega kõik torude vertikaalsed vahed suvaliseks)
+
+    public double skoor = 0;
+
+    //public String skoorStringina = Integer.toString(Skoor); //garbage code vist, delete later
+
+    public static int takistuseKiirus = 5; //Math.toIntExact(Math.round(Math.random()*10+5)); hiljem implementida midagi sellist, aga seniks on see staatiline muutuja
+
     private ArrayList<Takistus> takistusteList;
 
     enum MänguOlek {
@@ -29,10 +36,10 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
 
 
     public Paneel(){
-        mängijaRuut= new Mängija(400, 400);
+        mängijaRuut= new Mängija(200, 300);
         takistusteList = new ArrayList<Takistus>();
         setPreferredSize(new Dimension(Aken.LAIUS, Aken.KÕRGUS));
-        setBackground(new Color(31, 158, 208));
+        setBackground(new Color(31, 158, 155));
         setLayout(null);
         setFocusable(true); //võtab sisendit vastu
         addKeyListener(this);
@@ -41,31 +48,39 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
     }
 
     @Override
-    public void paintComponent (Graphics g){
+    public void paintComponent (Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(new Color(38, 129, 216));
-        g.fillRect(0,0,Aken.LAIUS,Aken.KÕRGUS);
+        g.setColor(new Color(38, 129, 120));
+        g.fillRect(0, 0, Aken.LAIUS, Aken.KÕRGUS);
 
-        g.setColor(new Color(10, 189, 15));
+        g.setColor(new Color(100, 153, 0));
         g.fillRect(0, Aken.mängualaAluminePiire, Aken.LAIUS, 20);
 
         g.setColor(new Color(192, 106, 4));
-        g.fillRect(0, Aken.KÕRGUS-80, Aken.LAIUS, 80 );
+        g.fillRect(0, Aken.KÕRGUS - 80, Aken.LAIUS, 80);
 
         if (mänguOlek == MänguOlek.MÄNG_KÄIB || mänguOlek == MänguOlek.MÄNG_LÄBI) { //kui mäng käib
             mängijaRuut.joonista(g);
             for (Takistus takistus : takistusteList) {
                 takistus.joonistaObjektid(g);
             }
-
         }
+        if (mänguOlek == MänguOlek.MÄNG_KÄIB) // ainult kui mäng käib
+        {Font font = new Font("Arial", Font.BOLD, 45);
+            g.setFont(font);
+            g.setColor(Color.ORANGE);
+            if ( skoor > 0)
+            g.drawString(String.valueOf(Math.round(skoor)), 300, 200);}
+
 
         if (mänguOlek == MänguOlek.MÄNG_LÄBI) { //kui mäng on läbi saanud
             Font font = new Font("Arial", Font.BOLD, 45);
             g.setFont(font);
-            g.setColor(Color.red);
-            g.drawString("Mäng läbi", 205, 200);
+            g.setColor(Color.ORANGE);
+            g.drawString("Mäng läbi", 212, 200);
+            g.setColor(Color.ORANGE);
+            g.drawString("punktid: " + String.valueOf(Math.round(skoor)), 210, 300);
         } else if (mänguOlek == MänguOlek.PEAMENÜÜS) { //kui mäng pole veel alanud
 
             Font font = new Font("Arial", Font.BOLD,  25);
@@ -79,7 +94,8 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
             alustaMängu();
 
     }else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            mängijaRuut.tühikuVajutus();
+            if (mänguOlek == MänguOlek.MÄNG_KÄIB){
+            mängijaRuut.tühikuVajutus();}
         }
     }
 
@@ -98,7 +114,7 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
             takistusteArv -= 2;
         }
 
-        for (Takistus takistus: takistusteList){
+        for (Takistus takistus: takistusteList){  // collision control
             if (mängijaRuut.getX() + Mängija.LAIUS >= takistus.getX() &&
                 takistus.getX()+Takistus.LAIUS >= mängijaRuut.getX() &&
                 mängijaRuut.getY() <= takistus.getY() + takistus.kõrgus &&
@@ -108,6 +124,9 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
 
                 lõpetaMäng();
             }
+            if (mängijaRuut.getX() == takistus.getX() + Takistus.LAIUS) {
+                skoor += 0.5; // lisab 0.5p, sest lind läheb kahest takistusest mööda
+            }
         }
         for (Takistus takistus: takistusteList){
             takistus.takistusLiigub();
@@ -116,14 +135,11 @@ public class Paneel extends JPanel implements KeyListener, ActionListener {
 
     public void kontrolliJagenereeriTakistused(){
 
-        double suvalineOoteaeg = Math.random() * 3;
-        Double newDouble = Double.valueOf(suvalineOoteaeg);
-        long suvalineOoteaegLongina = newDouble.longValue();
-
-        while (takistusteArv < 6){
-            int kõrgus = (int) (Math.random() * 100) +200;
-            int xAsukoht = 700;
-
+        while (takistusteArv < 10){
+            int kõrgus = (int) (Math.random() * 300) + Math.toIntExact(Math.round(Math.random() * 50));
+            int xAsukoht = 700 ;
+            //int torudeVahedeRandomizer = (int) Math.round(Math.random()*500); hiljem implementeerin
+            //int ajutineXAsukoht = (int) Math.round(Math.random()*500); hiljem implementeerin
             if (takistusteList.size() != 0) {
                 xAsukoht = takistusteList.get(takistusteList.size()-2).getX() + Aken.LAIUS + 100;
             }
